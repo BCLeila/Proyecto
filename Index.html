@@ -1,0 +1,95 @@
+<body></body>
+<script src="/three.js"></script>
+<script>
+  // The "scene" is where stuff in our game will happen:
+  var scene = new THREE.Scene();
+  var flat = {flatShading: true};
+  var light = new THREE.AmbientLight('white', 0.8);
+  scene.add(light);
+
+  // The "camera" is what sees the stuff:
+  var aspectRatio = window.innerWidth / window.innerHeight;
+  var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
+  camera.position.z = 500;
+  scene.add(camera);
+
+  // The "renderer" draws what the camera sees onto the screen:
+  var renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  // ******** START CODING ON THE NEXT LINE ********
+
+    const loader = new THREE.TextureLoader();
+const material = new THREE.MeshBasicMaterial({
+map: loader.load('https://media.gettyimages.com/illustrations/full-earth-closeup-illustration-id85757273?k=6&m=85757273&s=612x612&w=0&h=rm51KIgP_VxvKWQ4Db7Ryvm18qQWEz95tm-_-k-tIfw='),
+});
+
+var shape = new THREE.SphereGeometry(50,50,50);
+var circulo = new THREE.Mesh(shape,material);
+
+scene.add(circulo);
+
+
+var clock = new THREE.Clock();
+
+function animate() {
+
+requestAnimationFrame(animate);
+var t = clock.getElapsedTime();
+
+
+circulo.rotation.y = circulo.rotation.y + 0.04;
+circulo.rotation.x = circulo.rotation.x + 0.04;
+
+
+renderer.render(scene, camera);
+}
+animate();
+
+const loader2 = new THREE.TextureLoader();
+const material2 = new THREE.MeshBasicMaterial({
+map: loader.load('https://media.gettyimages.com/photos/photo-of-grey-concrete-wall-for-texture-background-picture-id1134312059?k=6&m=1134312059&s=612x612&w=0&h=SwAbcTXgg6fjnN8S3wS_gXscDu8vWdreOYkGjjLpp7o=')});
+
+var shape = new THREE.CylinderGeometry (50,200,50);
+var base = new THREE.Mesh(shape,material2);
+
+scene.add(base);
+base.position.set(0,-100,0);
+
+const loader3 = new THREE.TextureLoader();
+const material3 = new THREE.MeshBasicMaterial({
+map: loader.load('https://media.gettyimages.com/vectors/white-painted-brick-wall-grunge-textured-background-illustration-vector-id1152902738?k=6&m=1152902738&s=612x612&w=0&h=7l8DAkXr6J4sldClIxs7c9yiNKpHqcGweiBkgTZi8gA=')});
+
+var shape = new THREE.TorusGeometry(100,5,100,100);
+var arco = new THREE.Mesh(shape,material3);
+
+scene.add(arco);
+arco.position.set(0,0,0);
+
+
+
+
+var cover = new THREE.PointsMaterial({color :'white', size: 15 });
+var shape2 = new THREE.Geometry();
+var distance = 4000;
+for (var i = 0; i<1000; i++){
+var ra = 2 * Math.PI * Math.random ();
+var dec = 2 * Math.PI * Math.random ();
+
+var point = new THREE.Vector3();
+point.x = distance * Math.cos(dec) * Math.cos(ra);
+point.y = distance * Math.sin(dec);
+point.z = distance * Math.cos(dec) * Math.cos(ra);
+shape2.vertices.push(point);
+}
+var stars = new THREE.Points(shape2,cover);
+scene.add(stars);
+stars.position.set(-2000,850,-700);
+stars.rotation.set (1,0.7,-0.7);
+
+    
+    
+     // Now, show what the camera sees on the screen:
+  renderer.render(scene, camera);
+</script>
